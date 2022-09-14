@@ -1,0 +1,13 @@
+{
+    "aiida.database": {
+        "port": null,
+        "timeout_ms": 2000
+    },
+    "aiida.verdi": {
+        "command": "/home/hungdt/venv/aiida/bin/verdi",
+        "path": "/home/hungdt/.aiida",
+        "profile": "hung",
+        "timeout_ms": 2000,
+        "max_buffer_kb": 1024
+    }
+}

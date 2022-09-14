@@ -1,5 +1,3 @@
-# dependencies: pymatgen <= 2021.2.8
-
 import re
 import numpy as np
 
@@ -13,7 +11,7 @@ def get_element_representation(name='Si'):
     generate one-hot representation for a element, e.g, si = [0.0, 1.0, 0.0, 0.0, ...]
     :param name: element symbol
     """
-    element = pm.Element(name)
+    element = pm.core.Element(name)
     general_element_electronic = {'s1': 0.0, 's2': 0.0, 'p1': 0.0, 'p2': 0.0, 'p3': 0.0,
                                   'p4': 0.0, 'p5': 0.0, 'p6': 0.0,
                                   'd1': 0.0, 'd2': 0.0, 'd3': 0.0, 'd4': 0.0, 'd5': 0.0,

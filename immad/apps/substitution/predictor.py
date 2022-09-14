@@ -1,10 +1,13 @@
+from pathlib import Path
 import numpy as np
 from itertools import product
-from tensorflow.keras.models import load_model
 
 from . import ofm
 from immad.abstract import Predictor
+
 from aiida.plugins import DataFactory
+from aiida import engine
+from aiida import orm
 
 class SubstitutionPredictor(Predictor):
     def __init__(self, host_material, model_dir):
@@ -14,17 +17,21 @@ class SubstitutionPredictor(Predictor):
         """
         Predictor.__init__(self)
 
-        number_neurons = [4, 8, 16, 32]
-        neural_activations = ['relu', 'sigmoid', 'tanh']
-        self.models = [load_model(f'{model_dir}/{nn}_{act}_ofm0_rand_neg.h5')
-                for nn, act in product(number_neurons, neural_activations)]
         self.host = host_material
         
         # verification parameters
         self.prob_threshold = 0.6
         self.max_optimal_choices = 2
+        
+        # AiiDA code
+        self.computer = orm.load_computer('pias')
+        self.code = orm.load_code('immad.sub@pias')
+        self.builder = self.code.get_builder()
 
     def evaluate(self, proposed_sample):
+        x_center_fn = 'x_center.npy'
+        x_env_fn = 'x_env.npy'
+        
         self.candidate = proposed_sample
         candidate_rep = ofm.get_element_representation(proposed_sample)
         data = ofm.local_structure_query(struct=self.host.get_structure())
@@ -34,17 +41,21 @@ class SubstitutionPredictor(Predictor):
         x_env = np.array(x_env)
 
         pair_idx = np.array(np.arange(x_env.shape[0]))
-        x_center_to_replace = []
-        x_env_for_replace = []
+        x_center_to_replace_arr = []
+        x_env_for_replace_arr = []
         for idx in pair_idx:
-            x_center_to_replace.append(candidate_rep)
-            x_env_for_replace.append(x_env[idx])
-        x_center_to_replace = np.array(x_center_to_replace)
-        x_env_for_replace = np.array(x_env_for_replace)
+            x_center_to_replace_arr.append(candidate_rep)
+            x_env_for_replace_arr.append(x_env[idx])
+        np.save(x_center_fn, x_center_to_replace_arr)
+        np.save(x_env_fn, x_env_for_replace_arr)
 
-        p = [model.predict([x_center_to_replace, x_env_for_replace]).ravel()
-                for model in self.models]
-        p = np.mean(p, axis=0)
+        # AiIDA remote process
+        path_to_file = Path(x_center_fn).parent.absolute()
+        self.builder.center = orm.SinglefileData(file=path_to_file/x_center_fn)
+        self.builder.env = orm.SinglefileData(file=path_to_file/x_env_fn)
+        result = engine.run(self.builder)
+        p = result['scores'].get_array('matrix')
+        
         return p, pair_idx
 
     def verify(self, sample_scores, sample_info):

@@ -5,8 +5,8 @@ from immad.abstract import Validator
 class SubstitutionValidator(Validator):
     def __init__(self):
         Validator.__init__(self)
-        RelaxWorkChain = WorkflowFactory('common_workflows.relax.quantum_espresso')
-        self.input_generator = RelaxWorkChain.get_input_generator()
+#        RelaxWorkChain = WorkflowFactory('common_workflows.relax.quantum_espresso')
+#        self.input_generator = RelaxWorkChain.get_input_generator()
 
     def run(self, sample):
         structure = sample['struct']

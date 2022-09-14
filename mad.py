@@ -5,8 +5,11 @@
 import os
 
 from immad.abstract import Materials
-from immad.plugins.substitution import SubstitutionPredictor as Predictor
-from immad.plugins.substitution import SubstitutionValidator as Validator
+from immad.apps.substitution import SubstitutionPredictor as Predictor
+from immad.apps.substitution import SubstitutionValidator as Validator
+
+from aiida import load_profile
+load_profile('hung')
 
 if __name__ == '__main__':
 
@@ -29,5 +32,5 @@ if __name__ == '__main__':
             optimal_structures += predictor.generate_proposed_structures()
 
     # VALIDATION
-    for sample in optimal_structures:
-        validator.run(sample)
+#    for sample in optimal_structures:
+#        validator.run(sample)
