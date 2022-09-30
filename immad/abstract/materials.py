@@ -20,6 +20,7 @@ class Materials(object):
             material_structure_file: the file for the structure of Nd2Fe14B
             candidates: all potential elements for substitution
         """
+        self.selected_atoms = []
         self.structure = Structure.from_file(material_structure_file)
         if type(candidates) != list:
             candidates = [candidates]
@@ -37,9 +38,9 @@ class Materials(object):
         Return the next item of the materials set
         """
         if self.candidate_index < len(self.candidates):
-            ret = self.candidates[self.candidate_index]
+            candidate = self.candidates[self.candidate_index]
             self.candidate_index += 1
-            return ret
+            return (candidate, self.selected_atoms)
         else:
             raise StopIteration
 
@@ -54,3 +55,6 @@ class Materials(object):
         Getter for self.candidates
         """
         return self.candidates
+
+    def set_selected_atoms(self, selected_atoms):
+        self.selected_atoms = selected_atoms

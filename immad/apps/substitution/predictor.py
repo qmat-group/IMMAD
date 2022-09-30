@@ -32,18 +32,26 @@ class SubstitutionPredictor(Predictor):
         x_center_fn = 'x_center.npy'
         x_env_fn = 'x_env.npy'
         
-        self.candidate = proposed_sample
-        candidate_rep = ofm.get_element_representation(proposed_sample)
+        self.candidate = proposed_sample[0]
+        self.substituted_atoms = proposed_sample[1]
+        
+        candidate_rep = ofm.get_element_representation(self.candidate)
+        # look up from get_structure to get the list of atoms
+        # read ofm.py line 46 
         data = ofm.local_structure_query(struct=self.host.get_structure())
         x_env = []
         for pair in data['local']:
             x_env.append(pair['env1'])
         x_env = np.array(x_env)
 
-        pair_idx = np.array(np.arange(x_env.shape[0]))
+        # select appropriate rows for substitution
+        #pair_idx = np.array(np.arange(x_env.shape[0]))
+        if len(self.substituted_atoms) == 0:
+            self.substituted_atoms = np.array(np.arange(x_env.shape[0]))
         x_center_to_replace_arr = []
         x_env_for_replace_arr = []
-        for idx in pair_idx:
+        #for idx in pair_idx:
+        for idx in self.substituted_atoms:
             x_center_to_replace_arr.append(candidate_rep)
             x_env_for_replace_arr.append(x_env[idx])
         np.save(x_center_fn, x_center_to_replace_arr)
@@ -56,7 +64,7 @@ class SubstitutionPredictor(Predictor):
         result = engine.run(self.builder)
         p = result['scores'].get_array('matrix')
         
-        return p, pair_idx
+        return p, (self.candidate, self.substituted_atoms)
 
     def verify(self, sample_scores, sample_info):
         # TODO: Hung: one may consider lattice symmetry to further remove
@@ -66,11 +74,11 @@ class SubstitutionPredictor(Predictor):
         final_choices = []
         host_struct = self.host.get_structure()
         for ind in chosen_ind:
-            i_source = sample_info[ind]
+            i_source = sample_info[1][ind]
             if str(host_struct[i_source].species_string) != self.candidate:
                 final_choices.append(ind)
         if len(final_choices) > 0:
-            self.optimal_choices = np.array(sample_info)[final_choices]
+            self.optimal_choices = np.array(sample_info[1])[final_choices]
             self.optimal_scores = sample_scores[final_choices]
             return True
         else:

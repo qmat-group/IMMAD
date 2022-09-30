@@ -74,7 +74,8 @@ def local_structure_query(struct):
         pairs.append({'center': center_vector,
                       'env0': env_vector_0,
                       'env1': env_vector_1})
-        local_xyz.append({"atoms": np.array(atom_xyz), "coords": np.array(coords_xyz)})
+        local_xyz.append({"atoms": np.array(atom_xyz),
+                          "coords": np.array(coords_xyz)})
 
     return {'local': pairs,
             "local_xyz": local_xyz,

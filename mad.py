@@ -23,10 +23,13 @@ if __name__ == '__main__':
     predictor = Predictor(materials, model_directory)
 
     validator = Validator()
+    
+    materials.set_selected_atoms([10, 20, 5])
 
     # PREDICTION
     optimal_structures = []
     for samples in materials:
+        print(samples)
         sample_scores, sample_info = predictor.evaluate(samples)
         if predictor.verify(sample_scores, sample_info):
             optimal_structures += predictor.generate_proposed_structures()
