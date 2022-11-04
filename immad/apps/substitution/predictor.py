@@ -10,17 +10,13 @@ from aiida import engine
 from aiida import orm
 
 class SubstitutionPredictor(Predictor):
-    def __init__(self, host_material, model_dir):
-        """
-        Input: 
-            model_dir: directory containing pretrained models
-        """
+    def __init__(self, host_material):
         Predictor.__init__(self)
 
         self.host = host_material
         
         # verification parameters
-        self.prob_threshold = 0.6
+        self.prob_threshold = 0.2
         self.max_optimal_choices = 2
         
         # AiiDA code
@@ -95,5 +91,6 @@ class SubstitutionPredictor(Predictor):
             substitutions.append({
                     'struct': StructureData(pymatgen=a),
                     'proba': self.optimal_scores[n],
+                    'subs' : (i_src, self.candidate)
                     })
         return substitutions
