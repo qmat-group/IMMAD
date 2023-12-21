@@ -7,7 +7,8 @@ __all__ = [
         'Validator', 'Predictor', 'run_immad'
         ]
 
-def run_immad(input_structure, candidates, atoms_for_substituted):
+def run_immad(input_structure, candidates, atoms_for_substituted,
+              validate=False):
     """
     Run the IMMAD workflow for prediction and validation of
     optimal structures obtained by atomic substitutions.
@@ -27,8 +28,6 @@ def run_immad(input_structure, candidates, atoms_for_substituted):
     
     predictor = Predictor(materials)
 
-    validator = Validator()
-    
     materials.set_selected_atoms(atoms_for_substituted)
 
     # PREDICTION
@@ -39,7 +38,9 @@ def run_immad(input_structure, candidates, atoms_for_substituted):
             optimal_structures += predictor.generate_proposed_structures()
             
     # VALIDATION
-    #for sample in optimal_structures:
-    #    validator.run(sample)
+    if validate:
+        validator = Validator()
+        for sample in optimal_structures:
+            validator.run(sample)
 
     return optimal_structures

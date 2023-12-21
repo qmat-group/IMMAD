@@ -1,37 +1,50 @@
 from aiida.engine import submit
-from aiida.plugins import WorkflowFactory
+from aiida import orm
 from immad.abstract import Validator
+from first_principle import DFTWorkChain
 
 class SubstitutionValidator(Validator):
     def __init__(self):
         Validator.__init__(self)
-#        RelaxWorkChain = WorkflowFactory('common_workflows.relax.quantum_espresso')
-#        self.input_generator = RelaxWorkChain.get_input_generator()
+
+        pw = orm.load_code('pw@phpc')
+        dos = orm.load_code('dos@phpc')
+        projwfc = orm.load_code('projwfc@phpc')
+        ph = orm.load_code('ph@phpc')
+        q2r = orm.load_code('q2r@phpc')
+        matdyn = orm.load_code('matdyn@phpc')
+        self.codes = (pw, dos, projwfc, ph, q2r, matdyn)
+
+        self.options = {
+                'resources': {
+                    'num_machines': 1,
+                    'tot_num_mpiprocs': 8,
+                    },
+                'max_wallclock_seconds': 18000,
+                'withmpi': True,
+                }
+        self.relax = self.bands = self.dos = self.phonon = False
+    
+    def set_relax(self, value: bool):
+        self.relax = value
+
+    def set_bands(self, value: bool):
+        self.bands = value
+
+    def set_dos(self, value: bool):
+        self.dos = value
+
+    def set_phonon(self, value: bool):
+        self.phonon = value
 
     def run(self, sample):
-        structure = sample['struct']
-        engines = {
-                'relax' : {
-                    # FIXME: Hung: hard-coded
-                    'code' : 'qe-6.5-pw@pias',
-                    'options' : {
-                        'resources' : {
-                            'tot_num_mpiprocs' : 12,
-                            'parallel_env' : 'mpi'
-                            },
-                        'max_wallclock_seconds' : 100
-                        }
-                    }
-                }
-        builder = self.input_generator.get_builder(
-                structure=structure, protocol='fast',
-                engines=engines, relax_type='none')
-
-        # FIXME: Hung: aiida-common-workflow assumes the scheduler is
-        # either PBS or SLURM with parameter "num_machines" always exist
-        # The two lines below is for SGE cluster by deleting "num_machines"
-        # If you are using PBS or SLURM, please comment these two lines
-        del builder.base_final_scf.pw.metadata.options.resources['num_machines']
-        del builder.base.pw.metadata.options.resources['num_machines']
-
-        submit(builder)
+        struct = sample['struct']
+        builder = DFTWorkChain.get_builder_from_protocol(
+                *self.codes, struct, options=self.options)
+        builder.want_relax = orm.Bool(self.relax)
+        builder.want_bands = orm.Bool(self.bands)
+        builder.want_dos = orm.Bool(self.dos)
+        builder.want_phonon = orm.Bool(self.phonon)
+        node = submit(builder)
+        print(f'Calculation: {node.process_class}<{node.pk}>')
+        return node

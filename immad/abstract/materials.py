@@ -1,6 +1,7 @@
 from pymatgen.core import Structure
 from pymatgen.io.ase import AseAtomsAdaptor
 from ase import Atoms
+from pathlib import Path
 
 class Materials(object):
     """
@@ -34,8 +35,8 @@ class Materials(object):
         elif isinstance(material, Atoms):
             # ase Atoms
             self.structure = AseAtomsAdaptor.get_structure(material)
-        elif isinstance(material, str):
-            self.structure = Structure.from_file(material_structure_file)
+        elif isinstance(material, Path):
+            self.structure = Structure.from_file(str(material))
         else:
             raise TypeError('Datatype not supported.')
         if type(candidates) != list:
