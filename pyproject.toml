@@ -1,0 +1,32 @@
+[build-system]
+requires = ['flit_core >=3.4,<4']
+build-backend = 'flit_core.buildapi'
+
+[project]
+name = 'immad'
+dynamic = ['version']
+description = 'Informatics for Molecules and MAterials Discovery (IMMAD)'
+authors = [
+  {name = 'Hung Dang', email = 'hung.dangthe@HOST'},
+  {name = 'Lam Pham', email = 'lam.phamtien@HOST'},
+  {name = 'Hoa Nghiem', email = 'hoa.nghiemthiminh@HOST'},
+  {name = 'Linh Nguyen', email = 'linh.nguyenngoc@HOST'},
+]
+maintainers = [
+  {name = 'Hung Dang', email = 'hung.dangthe@HOST'},
+]
+readme = 'README.md'
+keywords = ['immad']
+requires-python = '>=3.8'
+dependencies = [
+  "aiida-core>=2.0,<3",
+]
+
+[project.entry-points.'aiida.workflows']
+'immad.dft' = 'immad.dft.dft:DFTWorkChain'
+'immad.phonon' = 'immad.dft.dft:PhononWorkChain'
+
+[tool.flit.module]
+name = 'immad'
+
+

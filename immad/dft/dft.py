@@ -3,7 +3,7 @@ from aiida.common import AttributeDict
 from aiida.engine import submit, ToContext, WorkChain, if_
 from aiida import orm
 from aiida_quantumespresso.workflows.protocols.utils import ProtocolMixin
-from phonon import PhononWorkChain
+from .phonon import PhononWorkChain
 
 PwBaseWorkChain = WorkflowFactory('quantumespresso.pw.base')
 PwRelaxWorkChain = WorkflowFactory('quantumespresso.pw.relax')
@@ -126,7 +126,7 @@ class DFTWorkChain(ProtocolMixin, WorkChain):
         relax.pop('base_final_scf', None)
         bands.pop('relax', None)
         dos.pop('scf', None)
-        dos['nscf']['pw']['parent_folder'] = orm.Data()
+        dos['nscf']['pw']['parent_folder'] = None #orm.Data()
         phonon.pop('scf', None)
         phonon.run_scf = orm.Bool(False)
 
