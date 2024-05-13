@@ -1,0 +1,13 @@
+apiVersion: network.kubesphere.io/v1alpha2
+kind: Eip
+metadata:
+  name: private-pool
+  annotations:
+    eip.openelb.kubesphere.io/is-default-eip: "true"
+  namespace: openelb-system
+spec:
+  address: 10.1.1.101-10.1.1.110
+  protocol: layer2
+  interface: em1
+  disable: false
+

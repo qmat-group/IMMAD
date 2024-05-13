@@ -1,0 +1,23 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: immad
+  namespace: immad
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - HOST
+    secretName: immad-cert
+  rules:
+  - host: HOST
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: proxy-public
+            port: 
+              number: 80

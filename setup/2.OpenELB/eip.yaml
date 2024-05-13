@@ -1,0 +1,12 @@
+apiVersion: network.kubesphere.io/v1alpha2
+kind: Eip
+metadata:
+  name: public-pool
+  annotations:
+    eip.openelb.kubesphere.io/is-default-eip: "false"
+spec:
+    address: IP_ADDRESS
+    protocol: layer2
+    interface: em2
+    disable: false
+

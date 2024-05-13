@@ -1,0 +1,26 @@
+apiVersion: network.kubesphere.io/v1alpha2
+kind: BgpConf
+metadata:
+  name: default
+spec:
+  as: 50000
+  listenPort: 17900
+  routerId: 10.1.1.1
+---
+apiVersion: network.kubesphere.io/v1alpha2
+kind: BgpPeer
+metadata:
+  name: bgppeer
+spec:
+  conf:
+    peerAs: 50001
+    neighborAddress: 10.1.1.1
+  afiSafis:
+    - config:
+        family:
+          afi: AFI_IP
+          safi: SAFI_UNICAST
+        enabled: true
+      addPaths:
+        config:
+          sendMax: 10

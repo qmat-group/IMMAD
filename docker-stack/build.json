@@ -1,0 +1,28 @@
+{
+  "variable": {
+    "PYTHON_VERSION": {
+      "default": "3.9.13"
+    },
+    "AIIDA_VERSION": {
+      "default": "2.4.0"
+    },
+    "AIIDALAB_VERSION": {
+      "default": "23.03.2"
+    },
+    "AIIDALAB_HOME_VERSION": {
+      "default": "23.03.1"
+    },
+    "AIIDALAB_WIDGETS_BASE_VERSION": {
+      "default": "2.1.0rc0"
+    },
+    "AIIDALAB_QUANTUM_ESPRESSO_VERSION": {
+      "default": "23.10.0rc0"
+    },
+    "PIP_VERSION": {
+      "default": "23.3.1"
+    },
+    "PYMATGEN_VERSION": {
+      "default": "2022.9.21"
+    }
+  }
+}

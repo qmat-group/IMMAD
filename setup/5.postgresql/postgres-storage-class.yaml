@@ -1,0 +1,9 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: postgres-storage
+  namespace: postgres
+provisioner: k8s-sigs.io/nfs-subdir-external-provisioner 
+parameters:
+  onDelete: retain
+reclaimPolicy: Retain

@@ -1,0 +1,36 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: rabbitmq-cluster
+  namespace: rabbitmq
+spec:
+  replicas: 1
+  override:
+    statefulSet:
+      spec:
+        podManagementPolicy: OrderedReady
+  service:
+    type: ClusterIP
+  persistence:
+    storageClassName: nfs-client
+    storage: 25Gi
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+            - key: app.kubernetes.io/name
+              operator: In
+              values:
+              - rabbitmq-cluster
+        topologyKey: kubernetes.io/hostname
+  rabbitmq:
+    additionalPlugins:
+    - rabbitmq_federation
+    additionalConfig: |
+      cluster_partition_handling = pause_minority
+      vm_memory_high_watermark_paging_ratio = 0.99
+      disk_free_limit.relative = 1.0
+      collect_statistics_interval = 10000
+      consumer_timeout = 3600000000
+

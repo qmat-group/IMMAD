@@ -1,0 +1,13 @@
+apiVersion: network.kubesphere.io/v1alpha2
+kind: Eip
+metadata:
+  name: public-pool
+  annotations:
+    eip.openelb.kubesphere.io/is-default-eip: "false"
+  namespace: openelb-system
+spec:
+    address: IP_ADDRESS
+    protocol: bgp
+    interface: em1
+    disable: false
+
