@@ -36,5 +36,4 @@ spec:
     app.kubernetes.io/name: ingress-nginx
   type: LoadBalancer
   externalIPs:
-    #- "IP_ADDRESS"
     - "IP_ADDRESS"

@@ -8,10 +8,10 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - HOST
+    - immad.site
     secretName: immad-cert
   rules:
-  - host: HOST
+  - host: immad.site
     http:
       paths:
       - path: /

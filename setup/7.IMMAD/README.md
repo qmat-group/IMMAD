@@ -23,7 +23,7 @@ kubectl get secret rabbitmq-cluster-default-user -n rabbitmq -o jsonpath="{.data
 ```
 
 - In `config.yaml` of IMMAD, paste these username and password into `singleuser.initContainers.args` as
-args: ['/immad/init.sh', '{unescaped_username}', 'PSQL_PASSWORD', '/var/immad', USERNAME, PASSWORD]
+args: ['/immad/init.sh', '{unescaped_username}', 'qmat2023', '/var/immad', USERNAME, PASSWORD]
 
 ## Certificate and Ingress
 We are unable to use `cert-manager` (failed when doing HTTP01 ACME challenge), therefore, we switch to using certificate provided by a CA (or even use certificate provided by Let's Encrypt).

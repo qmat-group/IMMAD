@@ -1,6 +1,7 @@
 #!/bin/bash
 
-CERT_DIR=./letsencrypt_HOST
+# Your SSL certificate is stored in $CERT_DIR directory
+CERT_DIR=./cert
 
 PRIV_KEY=$CERT_DIR/privkey.pem
 CERT=$CERT_DIR/cert.pem

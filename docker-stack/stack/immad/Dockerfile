@@ -1,7 +1,7 @@
 ARG BASE
 FROM ${BASE}
 
-LABEL maintainer="IMMAD Project <hung.dangthe@HOST>"
+LABEL maintainer="IMMAD Project <hung.dangthe@phenikaa-uni.edu.vn>"
 
 USER root
 

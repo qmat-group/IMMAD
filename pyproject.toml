@@ -7,13 +7,13 @@ name = 'immad'
 dynamic = ['version']
 description = 'Informatics for Molecules and MAterials Discovery (IMMAD)'
 authors = [
-  {name = 'Hung Dang', email = 'hung.dangthe@HOST'},
-  {name = 'Lam Pham', email = 'lam.phamtien@HOST'},
-  {name = 'Hoa Nghiem', email = 'hoa.nghiemthiminh@HOST'},
-  {name = 'Linh Nguyen', email = 'linh.nguyenngoc@HOST'},
+  {name = 'Hung Dang', email = 'hung.dangthe@phenikaa-uni.edu.vn'},
+  {name = 'Lam Pham', email = 'lam.phamtien@phenikaa-uni.edu.vn'},
+  {name = 'Hoa Nghiem', email = 'hoa.nghiemthiminh@phenikaa-uni.edu.vn'},
+  {name = 'Linh Nguyen', email = 'linh.nguyenngoc@phenikaa-uni.edu.vn'},
 ]
 maintainers = [
-  {name = 'Hung Dang', email = 'hung.dangthe@HOST'},
+  {name = 'Hung Dang', email = 'hung.dangthe@phenikaa-uni.edu.vn'},
 ]
 readme = 'README.md'
 keywords = ['immad']

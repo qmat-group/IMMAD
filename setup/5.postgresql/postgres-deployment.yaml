@@ -52,7 +52,7 @@ spec:
     - nfsvers=4.1
   nfs:
     path: /state/partition1/postgresql
-    server: SOME_HOST
+    server: HOSTNAME
 ---
 kind: PersistentVolumeClaim
 apiVersion: v1

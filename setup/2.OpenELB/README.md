@@ -40,5 +40,5 @@ kubectl edit configmap kube-proxy -n kube-system
 
 ### Specify the NIC to be used
 ```
-kubectl annotate nodes  SOME_HOSTlayer2.openelb.kubesphere.io/v1alpha1="IP_ADDRESS"
+kubectl annotate nodes HOSTNAME layer2.openelb.kubesphere.io/v1alpha1="IP_ADDRESS"
 ```

@@ -135,7 +135,7 @@ then save the line `kubeadm join ...` for later use.
 - Configure to manage cluster as a regular user
 ```
 mkdir -p $HOME/.kube
-sudo cp -i /etc/kubernetes/PSQL_ROOT.conf $HOME/.kube/config
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 

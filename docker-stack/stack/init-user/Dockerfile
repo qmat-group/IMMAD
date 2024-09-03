@@ -2,7 +2,7 @@ ARG BASE
 FROM $BASE
 RUN apk add --no-cache postgresql-client
 
-LABEL maintainer="IMMAD Project <hung.dangthe@HOST>"
+LABEL maintainer="IMMAD Project <hung.dangthe@phenikaa-uni.edu.vn>"
 
 ARG UID=1000
 ARG GID=1000

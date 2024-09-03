@@ -2,7 +2,7 @@
 
 PGHOST=postgres.postgres
 PGPORT=5432
-PGADMIN=PSQL_ROOT
+PGADMIN=admin
 PGPASSWORD=$2
 PGLOGIN=postgresql://$PGADMIN:$PGPASSWORD@$PGHOST/postgres
 

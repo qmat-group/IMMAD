@@ -8,7 +8,7 @@ kubectl apply -f postgres-storage-class.yaml
 kubectl create namespace postgres
 ```
 
-- Create secrets for PostgreSQL server containing the database name,  PSQL_ROOTuser and password 
+- Create secrets for PostgreSQL server containing the database name, admin user and password 
 ```
 kubectl -n postgres create secret generic postgres-secret --from-env-file=sec-env.conf
 ```
