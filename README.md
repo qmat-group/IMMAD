@@ -1,8 +1,8 @@
 # IMMAD
-Informatics for Molecules and MAterials Discovery (IMMAD) is a project aiming at developing a framework for data accumulation in combination with materials prediction/modeling and high-throughput numerical simulations for materials science.
+Informatics for Molecules and MAterials Discovery (IMMAD) is a project aiming at developing a framework for data accumulation in combination with materials prediction/modeling and high-throughput numerical simulations for materials science based on [AiiDA](https://www.aiida.net/) infrastructure.
 
 # Installation
-We rely on [AiiDA](https://www.aiida.net/) and [AiiDAlab](https://www.aiidalab.net/) for the development of IMMAD. You may read the documentation of AiiDA, AiiDAlab and also [JupyterHub](https://jupyter.org/hub)for further information about the deployment process.
+We rely on [AiiDA](https://www.aiida.net/) and [AiiDAlab](https://www.aiidalab.net/) for the development of IMMAD. You may read the documentation of AiiDA, AiiDAlab and also [JupyterHub](https://jupyter.org/hub) for further information about the deployment process.
 
 **Note**: This instruction is not complete yet. There are several hard-coded parameters that you will have to modify. Moreover, you need to rebuild Docker images and push them to another Docker Hub repository for deployment. 
 
