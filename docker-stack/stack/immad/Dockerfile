@@ -15,7 +15,6 @@ RUN apt-get update --yes && \
 WORKDIR /opt/
 
 ARG AIIDA_VERSION
-ARG PYMATGEN_VERSION
 ARG PIP_VERSION
 
 ENV AIIDA_PROFILE_NAME default
@@ -24,8 +23,7 @@ ENV AIIDA_PROFILE_NAME default
 # The lower bound of aiida-core is set to the version of aiida-core to prevent
 # lower aiida-core DB version installed and trigger database downgrade.
 RUN echo "pip==${PIP_VERSION}" > /opt/requirements.txt && \
-    echo "aiida-core>=${AIIDA_VERSION},<3" >> /opt/requirements.txt && \
-    echo "pymatgen==${PYMATGEN_VERSION}" >> /opt/requirements.txt
+    echo "aiida-core>=${AIIDA_VERSION},<3" >> /opt/requirements.txt 
 
 # Install the shared requirements.
 RUN mamba install --yes \
@@ -99,14 +97,24 @@ RUN git clone https://github.com/aiidalab/aiidalab-home && \
      fix-permissions "${CONDA_DIR}" && \
      fix-permissions "/home/${NB_USER}"
 
+# Install and enable appmode, turning Jupyter notebooks to Apps
+RUN mamba install --channel conda-forge appmode
+RUN pip install appmode==0.8.0 --no-cache-dir --no-user
+# Enable appmode extension
+RUN jupyter nbextension enable --py --sys-prefix appmode && \
+    jupyter serverextension enable --py --sys-prefix appmode
+
+# Swap appmode icon for AiiDAlab gears icon, shown during app load
+COPY --chown=${NB_UID}:${NB_GID} gears.svg ${CONDA_DIR}/share/jupyter/nbextensions/appmode/gears.svg
+
 # Install and enable appmode.
-RUN git clone https://github.com/oschuett/appmode.git && \
-     cd appmode && \
-     git checkout v0.8.0
-COPY gears.svg ./appmode/appmode/static/gears.svg
-RUN pip install ./appmode --no-cache-dir && \
-     jupyter nbextension enable --py --sys-prefix appmode && \
-     jupyter serverextension enable --py --sys-prefix appmode
+#RUN git clone https://github.com/oschuett/appmode.git && \
+#     cd appmode && \
+#     git checkout v0.8.0
+#COPY gears.svg ./appmode/appmode/static/gears.svg
+#RUN pip install ./appmode --no-cache-dir && \
+#     jupyter nbextension enable --py --sys-prefix appmode && \
+#     jupyter serverextension enable --py --sys-prefix appmode
 
 # Install other default apps: aiidalab-widgets-base and quantum-espresso
 ARG AIIDALAB_WIDGETS_BASE_VERSION
@@ -169,7 +177,7 @@ RUN mkdir -p ${AIIDALAB_APPS}
 ENV NOTEBOOK_ARGS \
      "--NotebookApp.default_url='/apps/apps/home/start.ipynb'" \
      "--ContentsManager.allow_hidden=True" \
-     "--MappingKernelManager.buffer_offline_messages=True" \
+     "--MappingKernelManager.buffer_offline_messages=False" \
      "--MappingKernelManager.cull_busy=True" \
      "--MappingKernelManager.cull_connected=True" \
      "--MappingKernelManager.cull_idle_timeout=64800" \

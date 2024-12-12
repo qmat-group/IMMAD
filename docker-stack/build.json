@@ -4,19 +4,19 @@
       "default": "3.9.13"
     },
     "AIIDA_VERSION": {
-      "default": "2.4.0"
+      "default": "2.6.3"
     },
     "AIIDALAB_VERSION": {
-      "default": "23.03.2"
+      "default": "24.09.0"
     },
     "AIIDALAB_HOME_VERSION": {
-      "default": "23.03.1"
+      "default": "24.09.0"
     },
     "AIIDALAB_WIDGETS_BASE_VERSION": {
-      "default": "2.1.0rc0"
+      "default": "2.3.0a2"
     },
     "AIIDALAB_QUANTUM_ESPRESSO_VERSION": {
-      "default": "23.10.0rc0"
+      "default": "24.10.0a4"
     },
     "PIP_VERSION": {
       "default": "23.3.1"

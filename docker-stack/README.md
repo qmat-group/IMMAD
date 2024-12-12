@@ -1,6 +1,6 @@
 # Docker Stack for IMMAD
 
-This repository contains the Dockerfiles and Bash scripts for the IMMAD docker image stack.
+This repository contains the Dockerfiles and Bash scripts for the IMMAD docker image stack. It is based on [aiidalab-docker-stack](https://github.com/aiidalab/aiidalab-docker-stack), which is from [AiiDA](https://www.aiida.net/) infrastructure.
 All images are based on the [jupyter/minimal-notebook](https://jupyter-docker-stacks.readthedocs.io/en/latest/using/selecting.html#jupyter-minimal-notebook).
 
 There are two images corresponding to two targets:
