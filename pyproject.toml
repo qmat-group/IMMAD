@@ -5,7 +5,7 @@ build-backend = 'flit_core.buildapi'
 [project]
 name = 'immad'
 dynamic = ['version']
-description = 'Informatics for Molecules and MAterials Discovery (IMMAD)'
+description = 'Informatics for Molecules and MAterials Discovery (IMMAD) based on AiiDA infrastructure'
 authors = [
   {name = 'Hung Dang', email = 'hung.dangthe@phenikaa-uni.edu.vn'},
   {name = 'Lam Pham', email = 'lam.phamtien@phenikaa-uni.edu.vn'},
